@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app">
+
+        <!-- ===== SIDEBAR ===== -->
+        <div class="sidebar">
+            <h1 class="logo">🌤️ WeatherApp</h1>
+
+            <!-- Search -->
+            <div class="search-box">
+                <input
+                    type="text"
+                    id="city-input"
+                    placeholder="Enter city name..."
+                    autocomplete="off"
+                />
+                <button id="search-btn">Search</button>
+            </div>
+
+            <!-- Add this AFTER search-box div -->
+<div class="city-selector">
+    <h3>🌍 Quick Select City</h3>
+    <select id="city-select">
+        <option value="">-- Select a City --</option>
+        <option value="london">🇬🇧 London, UK</option>
+        <option value="new york">🇺🇸 New York, USA</option>
+        <option value="tokyo">🇯🇵 Tokyo, Japan</option>
+        <option value="paris">🇫🇷 Paris, France</option>
+        <option value="dubai">🇦🇪 Dubai, UAE</option>
+        <option value="sydney">🇦🇺 Sydney, Australia</option>
+        <option value="moscow">🇷🇺 Moscow, Russia</option>
+        <option value="mumbai">🇮🇳 Mumbai, India</option>
+    </select>
+</div>
+
+            <!-- Saved Cities -->
+            <div class="saved-section">
+                <h3>📌 Saved Cities</h3>
+                <ul id="saved-list"></ul>
+            </div>
+
+            <!-- Unit Toggle -->
+            <div class="unit-toggle">
+                <span>°C</span>
+                <label class="switch">
+                    <input type="checkbox" id="unit-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span>°F</span>
+            </div>
+        </div>
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <div class="main">
+
+            <!-- WEATHER CARD -->
+            <div class="weather-card" id="weather-card">
+
+                <!-- Top row -->
+                <div class="card-top">
+                    <div class="location">
+                        <h2 id="city-name">London</h2>
+                        <p id="country">United Kingdom 🇬🇧</p>
+                        <p id="current-date">Monday, Jan 15, 2025</p>
+                    </div>
+                    <div class="weather-icon" id="weather-icon">⛅</div>
+                </div>
+
+                <!-- Temperature -->
+                <div class="temperature">
+                    <span id="temp">18</span>
+                    <span class="degree" id="degree-unit">°C</span>
+                </div>
+                <p class="description" id="description">Partly Cloudy</p>
+
+                <!-- Stats Row -->
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-icon">💧</span>
+                        <span class="stat-label">Humidity</span>
+                        <span class="stat-value" id="humidity">65%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">💨</span>
+                        <span class="stat-label">Wind</span>
+                        <span class="stat-value" id="wind">12 km/h</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">👁️</span>
+                        <span class="stat-label">Visibility</span>
+                        <span class="stat-value" id="visibility">10 km</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon">🌡️</span>
+                        <span class="stat-label">Feels Like</span>
+                        <span class="stat-value" id="feels-like">15°C</span>
+                    </div>
+                </div>
+
+                <!-- Save Button -->
+                <button class="save-btn" id="save-btn">
+                    📌 Save This City
+                </button>
+            </div>
+
+            <!-- FORECAST SECTION -->
+            <div class="forecast-section">
+                <h3>📅 5-Day Forecast</h3>
+                <div class="forecast" id="forecast"></div>
+            </div>
+
+            <!-- NOTES SECTION -->
+            <div class="notes-section">
+                <h3>📝 Weather Notes</h3>
+                <textarea
+                    id="notes"
+                    placeholder="Write your weather notes here... (Auto-saved!)"
+                    rows="4"
+                ></textarea>
+                <div class="notes-footer">
+                    <span id="notes-status">Ready</span>
+                    <button id="clear-notes">Clear Notes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

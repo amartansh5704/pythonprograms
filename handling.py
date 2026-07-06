@@ -52,6 +52,7 @@ def custom_exception_demo():
     finally:
         print("Age input operation completed.")
 
+
 while True:
     print("\n--- Exception Handling Demonstration ---")
     print("1. Safe Division")

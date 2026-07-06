@@ -2,7 +2,11 @@ print("Choose a pattern to print:")
 print("1. Right Triangle")
 print("2. Inverted Triangle")
 print("3. Pyramid")
-choice = int(input("Enter your choice (1/2/3): "))
+print("4. Reverse Pyramid")
+print("5. Inverted Right Triangle")
+print("6. Diamond")
+
+choice = int(input("Enter your choice (1/2/3/4/5/6): "))
 rows = int(input("Enter the number of rows: "))
 print()
 
@@ -50,4 +54,4 @@ elif choice == 6:
 
 
 else:
-    print("Invalid choice! Please select 1, 2, or 3.")
+    print("Invalid choice! Please select 1, 2, 3,4,5 or 6.")
