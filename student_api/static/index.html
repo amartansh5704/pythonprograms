@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #2c3e50;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .navbar h1 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .nav-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-stat {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .nav-stat .number {
+            font-size: 20px;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .nav-stat .label {
+            font-size: 11px;
+            color: #bdc3c7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .notification {
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .notification.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to   { transform: translateY(0);     opacity: 1; }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #3498db;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-primary   { background: #3498db; color: white; }
+        .btn-success   { background: #27ae60; color: white; }
+        .btn-danger    { background: #e74c3c; color: white; }
+        .btn-warning   { background: #f39c12; color: white; }
+        .btn-secondary { background: #95a5a6; color: white; }
+
+        .btn-full {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            font-size: 15px;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-bar input:focus {
+            border-color: #3498db;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-bar select {
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .students-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .student-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid #3498db;
+            transition: transform 0.2s;
+        }
+
+        .student-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .student-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .student-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .grade-badge {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+        }
+
+        .grade-A { background: #27ae60; }
+        .grade-B { background: #3498db; }
+        .grade-C { background: #f39c12; }
+        .grade-D { background: #e67e22; }
+        .grade-F { background: #e74c3c; }
+
+        .student-info {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .student-info span {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .enrolled-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .enrolled-yes { background: #d4edda; color: #155724; }
+        .enrolled-no  { background: #f8d7da; color: #721c24; }
+
+        .card-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f2f5;
+        }
+
+        .card-actions .btn {
+            flex: 1;
+            padding: 7px;
+            font-size: 12px;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            width: 500px;
+            max-width: 90vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalIn 0.3s ease;
+        }
+
+        @keyframes modalIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 16px;
+            grid-column: 1 / -1;
+        }
+
+        .spinner {
+            border: 3px solid #f0f2f5;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #999;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state .icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <h1>🎓 Students Management System</h1>
+    <div class="nav-stats">
+        <div class="nav-stat">
+            <div class="number" id="stat-total">0</div>
+            <div class="label">Total</div>
+        </div>
+        <div class="nav-stat">
+            <div class="number" id="stat-enrolled">0</div>
+            <div class="label">Enrolled</div>
+        </div>
+        <div class="nav-stat">
+            <div class="number" id="stat-not-enrolled">0</div>
+            <div class="label">Not Enrolled</div>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <!-- ADD STUDENT FORM -->
+    <div class="card">
+        <h2>➕ Add New Student</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                <label>Full Name *</label>
+                <input type="text" id="input-name" placeholder="e.g. John Doe">
+            </div>
+            <div class="form-group">
+                <label>Age *</label>
+                <input type="number" id="input-age" placeholder="e.g. 20" min="5" max="100">
+            </div>
+            <div class="form-group">
+                <label>Grade *</label>
+                <select id="input-grade">
+                    <option value="">Select Grade</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="F">F</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Subject *</label>
+                <input type="text" id="input-subject" placeholder="e.g. Mathematics">
+            </div>
+            <div class="form-group">
+                <label>Email *</label>
+                <input type="email" id="input-email" placeholder="e.g. student@school.com">
+            </div>
+            <div class="form-group">
+                <label>Enrollment Status</label>
+                <select id="input-enrolled">
+                    <option value="true">Enrolled</option>
+                    <option value="false">Not Enrolled</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-success btn-full" id="add-btn" onclick="addStudent()">
+            ➕ Add Student
+        </button>
+    </div>
+
+    <!-- SEARCH & FILTER -->
+    <div class="card">
+        <h2>🔍 Search & Filter</h2>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search by name or subject..." oninput="handleSearch()">
+            <button class="btn btn-primary" onclick="handleSearch()">Search</button>
+            <button class="btn btn-secondary" onclick="clearSearch()">Clear</button>
+        </div>
+        <div class="filter-bar">
+            <select id="filter-enrolled" onchange="loadStudents()">
+                <option value="">All Students</option>
+                <option value="true">Enrolled Only</option>
+                <option value="false">Not Enrolled Only</option>
+            </select>
+            <select id="filter-grade" onchange="loadStudents()">
+                <option value="">All Grades</option>
+                <option value="A">Grade A</option>
+                <option value="B">Grade B</option>
+                <option value="C">Grade C</option>
+                <option value="D">Grade D</option>
+                <option value="F">Grade F</option>
+            </select>
+            <button class="btn btn-secondary" onclick="clearFiltersAndReload()">🔄 Refresh</button>
+        </div>
+    </div>
+
+    <!-- STUDENTS LIST -->
+    <div class="card">
+        <h2>👥 Students</h2>
+        <div class="students-grid" id="students-container">
+            <div class="loading">
+                <div class="spinner"></div>
+                Loading students...
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+        <h2>✏️ Edit Student</h2>
+        <input type="hidden" id="edit-student-id">
+        <div class="form-grid" style="grid-template-columns: 1fr 1fr;">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="edit-name" placeholder="Full Name">
+            </div>
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" id="edit-age" placeholder="Age" min="5" max="100">
+            </div>
+            <div class="form-group">
+                <label>Grade</label>
+                <select id="edit-grade">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="F">F</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Subject</label>
+                <input type="text" id="edit-subject" placeholder="Subject">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="edit-email" placeholder="Email">
+            </div>
+            <div class="form-group">
+                <label>Enrollment</label>
+                <select id="edit-enrolled">
+                    <option value="true">Enrolled</option>
+                    <option value="false">Not Enrolled</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-success" id="save-edit-btn" style="flex:1" onclick="saveEdit()">
+                💾 Save Changes
+            </button>
+            <button class="btn btn-secondary" onclick="closeModal()">
+                ✖ Cancel
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script>
+
+// ── CONFIG ──────────────────────────────────────────────────
+const API_URL = "http://127.0.0.1:8000";
+
+// ── FLAGS (prevent double clicks) ────────────────────────────
+let isAdding  = false;
+let isSaving  = false;
+let isDeleting = false;
+let searchTimeout = null;
+
+
+// ══════════════════════════════════════════════════════════════
+// UTILITY FUNCTIONS
+// ══════════════════════════════════════════════════════════════
+
+function showNotification(message, type) {
+    // type is "success" or "error"
+    const notif = document.getElementById("notification");
+    notif.textContent = message;
+    notif.className = "notification " + type;
+    notif.style.display = "block";
+
+    setTimeout(function() {
+        notif.style.display = "none";
+    }, 3000);
+}
+
+
+function showLoading() {
+    document.getElementById("students-container").innerHTML =
+        '<div class="loading"><div class="spinner"></div>Loading...</div>';
+}
+
+
+function disableButton(btn, text) {
+    btn.disabled = true;
+    btn.textContent = text;
+}
+
+
+function enableButton(btn, text) {
+    btn.disabled = false;
+    btn.textContent = text;
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// LOAD STUDENTS FROM API
+// ══════════════════════════════════════════════════════════════
+
+async function loadStudents() {
+
+    showLoading();
+
+    // Read filter values
+    var enrolled = document.getElementById("filter-enrolled").value;
+    var grade    = document.getElementById("filter-grade").value;
+
+    // Build URL with filters
+    var url = API_URL + "/students";
+    var params = [];
+
+    if (enrolled !== "") {
+        params.push("enrolled=" + enrolled);
+    }
+    if (grade !== "") {
+        params.push("grade=" + grade);
+    }
+    if (params.length > 0) {
+        url = url + "?" + params.join("&");
+    }
+
+    try {
+        var response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Server error: " + response.status);
+        }
+
+        var students = await response.json();
+        displayStudents(students);
+        loadStats();
+
+    } catch (error) {
+        console.error("Error loading students:", error);
+        document.getElementById("students-container").innerHTML =
+            '<div class="empty-state"><div class="icon">❌</div><p>Failed to load. Is server running?</p></div>';
+    }
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// DISPLAY STUDENTS AS CARDS
+// ══════════════════════════════════════════════════════════════
+
+function displayStudents(students) {
+
+    var container = document.getElementById("students-container");
+
+    // No students found
+    if (students.length === 0) {
+        container.innerHTML =
+            '<div class="empty-state"><div class="icon">📭</div><p>No students found</p></div>';
+        return;
+    }
+
+    // Build HTML for each student card
+    var html = "";
+
+    for (var i = 0; i < students.length; i++) {
+
+        var s = students[i];
+
+        // Escape single quotes in name to prevent JavaScript errors
+        var safeName = s.name.replace(/'/g, "\\'");
+
+        html += '<div class="student-card">';
+        html += '  <div class="student-card-header">';
+        html += '    <div class="student-name">' + s.name + '</div>';
+        html += '    <div class="grade-badge grade-' + s.grade + '">' + s.grade + '</div>';
+        html += '  </div>';
+        html += '  <div class="student-info">📚 <span>' + s.subject + '</span></div>';
+        html += '  <div class="student-info">🎂 Age: <span>' + s.age + '</span></div>';
+        html += '  <div class="student-info">📧 <span>' + s.email + '</span></div>';
+        html += '  <div class="student-info">🆔 ID: <span>' + s.id + '</span></div>';
+
+        if (s.enrolled) {
+            html += '  <div class="enrolled-badge enrolled-yes">✅ Enrolled</div>';
+        } else {
+            html += '  <div class="enrolled-badge enrolled-no">❌ Not Enrolled</div>';
+        }
+
+        html += '  <div class="card-actions">';
+        html += '    <button class="btn btn-warning" onclick="openEditModal(' + s.id + ')">✏️ Edit</button>';
+        html += '    <button class="btn btn-danger" onclick="deleteStudent(' + s.id + ', \'' + safeName + '\')">🗑️ Delete</button>';
+        html += '  </div>';
+        html += '</div>';
+    }
+
+    container.innerHTML = html;
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// ADD NEW STUDENT
+// ══════════════════════════════════════════════════════════════
+
+async function addStudent() {
+
+    // Prevent double click
+    if (isAdding) return;
+    isAdding = true;
+
+    var btn = document.getElementById("add-btn");
+    disableButton(btn, "⏳ Adding...");
+
+    // Read form values
+    var name     = document.getElementById("input-name").value.trim();
+    var age      = document.getElementById("input-age").value;
+    var grade    = document.getElementById("input-grade").value;
+    var subject  = document.getElementById("input-subject").value.trim();
+    var email    = document.getElementById("input-email").value.trim();
+    var enrolled = document.getElementById("input-enrolled").value === "true";
+
+    // Validate
+    if (!name || !age || !grade || !subject || !email) {
+        showNotification("Please fill in all required fields!", "error");
+        isAdding = false;
+        enableButton(btn, "➕ Add Student");
+        return;
+    }
+
+    // Build data object
+    var studentData = {
+        name:     name,
+        age:      parseInt(age),
+        grade:    grade,
+        subject:  subject,
+        email:    email,
+        enrolled: enrolled
+    };
+
+    try {
+        var response = await fetch(API_URL + "/students", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(studentData)
+        });
+
+        if (response.ok) {
+            var created = await response.json();
+            showNotification("✅ Student '" + created.name + "' added successfully!", "success");
+            clearAddForm();
+            loadStudents();
+
+        } else {
+            var error = await response.json();
+            showNotification("❌ Error: " + error.detail, "error");
+        }
+
+    } catch (error) {
+        showNotification("❌ Failed to connect to server", "error");
+        console.error(error);
+    }
+
+    // Always re-enable
+    isAdding = false;
+    enableButton(btn, "➕ Add Student");
+}
+
+
+function clearAddForm() {
+    document.getElementById("input-name").value     = "";
+    document.getElementById("input-age").value      = "";
+    document.getElementById("input-grade").value    = "";
+    document.getElementById("input-subject").value  = "";
+    document.getElementById("input-email").value    = "";
+    document.getElementById("input-enrolled").value = "true";
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// EDIT STUDENT
+// ══════════════════════════════════════════════════════════════
+
+async function openEditModal(studentId) {
+    // Fetch fresh data from API for this student
+    // This avoids passing messy data through onclick attributes
+
+    try {
+        var response = await fetch(API_URL + "/students/" + studentId);
+
+        if (!response.ok) {
+            showNotification("❌ Could not load student data", "error");
+            return;
+        }
+
+        var student = await response.json();
+
+        // Fill the edit form with current data
+        document.getElementById("edit-student-id").value = student.id;
+        document.getElementById("edit-name").value       = student.name;
+        document.getElementById("edit-age").value        = student.age;
+        document.getElementById("edit-grade").value      = student.grade;
+        document.getElementById("edit-subject").value    = student.subject;
+        document.getElementById("edit-email").value      = student.email;
+        document.getElementById("edit-enrolled").value   = student.enrolled.toString();
+
+        // Show the modal
+        document.getElementById("edit-modal").classList.add("active");
+
+    } catch (error) {
+        showNotification("❌ Failed to connect to server", "error");
+        console.error(error);
+    }
+}
+
+
+function closeModal() {
+    document.getElementById("edit-modal").classList.remove("active");
+}
+
+
+async function saveEdit() {
+
+    // Prevent double click
+    if (isSaving) return;
+    isSaving = true;
+
+    var btn = document.getElementById("save-edit-btn");
+    disableButton(btn, "⏳ Saving...");
+
+    var studentId = document.getElementById("edit-student-id").value;
+
+    var updateData = {
+        name:     document.getElementById("edit-name").value.trim(),
+        age:      parseInt(document.getElementById("edit-age").value),
+        grade:    document.getElementById("edit-grade").value,
+        subject:  document.getElementById("edit-subject").value.trim(),
+        email:    document.getElementById("edit-email").value.trim(),
+        enrolled: document.getElementById("edit-enrolled").value === "true"
+    };
+
+    // Validate
+    if (!updateData.name || !updateData.age || !updateData.subject || !updateData.email) {
+        showNotification("Please fill in all fields!", "error");
+        isSaving = false;
+        enableButton(btn, "💾 Save Changes");
+        return;
+    }
+
+    try {
+        var response = await fetch(API_URL + "/students/" + studentId, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updateData)
+        });
+
+        if (response.ok) {
+            var updated = await response.json();
+            showNotification("✅ Student '" + updated.name + "' updated!", "success");
+            closeModal();
+            loadStudents();
+
+        } else {
+            var error = await response.json();
+            showNotification("❌ Error: " + error.detail, "error");
+        }
+
+    } catch (error) {
+        showNotification("❌ Failed to connect to server", "error");
+        console.error(error);
+    }
+
+    isSaving = false;
+    enableButton(btn, "💾 Save Changes");
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// DELETE STUDENT
+// ══════════════════════════════════════════════════════════════
+
+async function deleteStudent(studentId, studentName) {
+
+    // Prevent double click
+    if (isDeleting) return;
+
+    // Ask user to confirm
+    var confirmed = confirm("Are you sure you want to delete '" + studentName + "'?");
+    if (!confirmed) return;
+
+    isDeleting = true;
+
+    try {
+        var response = await fetch(API_URL + "/students/" + studentId, {
+            method: "DELETE"
+        });
+
+        if (response.ok) {
+            showNotification("✅ Student '" + studentName + "' deleted!", "success");
+            loadStudents();
+
+        } else {
+            var error = await response.json();
+            showNotification("❌ Error: " + error.detail, "error");
+        }
+
+    } catch (error) {
+        showNotification("❌ Failed to connect to server", "error");
+        console.error(error);
+    }
+
+    isDeleting = false;
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// SEARCH
+// ══════════════════════════════════════════════════════════════
+
+function handleSearch() {
+    var query = document.getElementById("search-input").value.trim();
+
+    // Clear previous timeout
+    clearTimeout(searchTimeout);
+
+    // If empty, load all
+    if (query === "") {
+        loadStudents();
+        return;
+    }
+
+    // Wait 400ms after typing stops, then search
+    searchTimeout = setTimeout(function() {
+        performSearch(query);
+    }, 400);
+}
+
+
+async function performSearch(query) {
+
+    showLoading();
+
+    try {
+        var response = await fetch(API_URL + "/students/search?q=" + encodeURIComponent(query));
+
+        if (response.ok) {
+            var results = await response.json();
+            displayStudents(results);
+        } else {
+            showNotification("❌ Search failed", "error");
+        }
+
+    } catch (error) {
+        showNotification("❌ Failed to connect to server", "error");
+        console.error(error);
+    }
+}
+
+
+function clearSearch() {
+    document.getElementById("search-input").value = "";
+    loadStudents();
+}
+
+
+function clearFiltersAndReload() {
+    document.getElementById("search-input").value    = "";
+    document.getElementById("filter-enrolled").value = "";
+    document.getElementById("filter-grade").value    = "";
+    loadStudents();
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// STATS
+// ══════════════════════════════════════════════════════════════
+
+async function loadStats() {
+
+    try {
+        var response = await fetch(API_URL + "/stats");
+
+        if (response.ok) {
+            var stats = await response.json();
+            document.getElementById("stat-total").textContent        = stats.total_students;
+            document.getElementById("stat-enrolled").textContent     = stats.enrolled;
+            document.getElementById("stat-not-enrolled").textContent = stats.not_enrolled;
+        }
+
+    } catch (error) {
+        console.error("Could not load stats:", error);
+    }
+}
+
+
+// ══════════════════════════════════════════════════════════════
+// CLOSE MODAL WHEN CLICKING OUTSIDE
+// ══════════════════════════════════════════════════════════════
+
+document.getElementById("edit-modal").addEventListener("click", function(event) {
+    if (event.target === this) {
+        closeModal();
+    }
+});
+
+
+// ══════════════════════════════════════════════════════════════
+// START - Load students when page opens
+// ══════════════════════════════════════════════════════════════
+
+loadStudents();
+
+</script>
+
+</body>
+</html>

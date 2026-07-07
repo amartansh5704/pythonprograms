@@ -1,0 +1,14 @@
+{
+  "students": [
+    {
+      "name": "kk",
+      "age": 21,
+      "grade": "A",
+      "subject": "phy",
+      "email": "kk@gmail.com",
+      "enrolled": true,
+      "id": 1
+    }
+  ],
+  "next_id": 3
+}
