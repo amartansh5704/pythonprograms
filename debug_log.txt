@@ -1,0 +1,152 @@
+2026-07-08 16:52:06,480 | DEBUG    | buggy_average                  | buggy_average called with: [10, 20, 30, 40, 50]
+2026-07-08 16:52:06,480 | DEBUG    | buggy_average                  | buggy_average result: 28.0
+2026-07-08 16:52:06,480 | DEBUG    | fixed_average                  | fixed_average called with: [10, 20, 30, 40, 50]
+2026-07-08 16:52:06,481 | DEBUG    | fixed_average                  | fixed_average result: 30.0
+2026-07-08 16:52:06,481 | DEBUG    | buggy_find_max                 | buggy_find_max result: 10
+2026-07-08 16:52:06,481 | DEBUG    | fixed_find_max                 | fixed_find_max result: 50
+2026-07-08 16:52:06,482 | DEBUG    | buggy_divide                   | buggy_divide: 10 / 0
+2026-07-08 16:52:06,482 | ERROR    | run_bug_demonstrations         | Caught expected crash: division by zero
+2026-07-08 16:52:06,490 | DEBUG    | run_bug_demonstrations         | Traceback (most recent call last):
+  File "D:\python\debug_profile_demo.py", line 621, in run_bug_demonstrations
+    result = calc.buggy_divide(10, 0)
+  File "D:\python\debug_profile_demo.py", line 168, in buggy_divide
+    return a / b  # BUG: no check for b == 0
+           ~~^~~
+ZeroDivisionError: division by zero
+
+2026-07-08 16:52:06,490 | DEBUG    | fixed_divide                   | fixed_divide: 10 / 0
+2026-07-08 16:52:06,490 | WARNING  | fixed_divide                   | Division by zero attempted. Returning None.
+2026-07-08 16:52:06,491 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=9, mid=9
+2026-07-08 16:52:06,491 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=8, mid=8
+2026-07-08 16:52:06,491 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=7, mid=7
+2026-07-08 16:52:06,491 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=6, mid=6
+2026-07-08 16:52:06,491 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=5, mid=5
+2026-07-08 16:52:06,492 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=4, mid=4
+2026-07-08 16:52:06,492 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=3, mid=3
+2026-07-08 16:52:06,492 | DEBUG    | fixed_binary_search            | binary_search: left=0, right=9, mid=4
+2026-07-08 16:52:06,492 | DEBUG    | fixed_binary_search            | binary_search: left=0, right=3, mid=1
+2026-07-08 16:52:06,492 | DEBUG    | fixed_binary_search            | binary_search: left=2, right=3, mid=2
+2026-07-08 16:52:06,493 | DEBUG    | fixed_binary_search            | binary_search: left=3, right=3, mid=3
+2026-07-08 16:52:59,876 | DEBUG    | process_age                    | Processing valid age: 25
+2026-07-08 16:52:59,877 | DEBUG    | process_age                    | Processing valid age: 17
+2026-07-08 16:53:17,040 | INFO     | slow_find_duplicates           | Running SLOW duplicate finder O(n²)
+2026-07-08 16:53:17,288 | INFO     | wrapper                        | TIMER >> slow_find_duplicates took 248.1413 ms
+2026-07-08 16:53:17,288 | INFO     | slow_string_concat             | Running SLOW string concat
+2026-07-08 16:53:17,317 | INFO     | wrapper                        | TIMER >> slow_string_concat took 28.6223 ms
+2026-07-08 16:53:17,318 | INFO     | slow_sort_search               | Running SLOW sort+search
+2026-07-08 16:53:17,319 | INFO     | wrapper                        | TIMER >> slow_sort_search took 1.8820 ms
+2026-07-08 16:53:17,321 | INFO     | fast_find_duplicates           | Running FAST duplicate finder O(n)
+2026-07-08 16:53:17,323 | INFO     | wrapper                        | TIMER >> fast_find_duplicates took 2.0025 ms
+2026-07-08 16:53:17,323 | INFO     | fast_string_concat             | Running FAST string concat
+2026-07-08 16:53:17,324 | INFO     | wrapper                        | TIMER >> fast_string_concat took 1.0185 ms
+2026-07-08 16:53:17,325 | INFO     | fast_sort_search               | Running FAST sort+search
+2026-07-08 16:53:17,326 | INFO     | wrapper                        | TIMER >> fast_sort_search took 0.4675 ms
+2026-07-08 16:53:17,413 | INFO     | run_cpu_profile_demo           | Profiles saved to slow_profile.prof and fast_profile.prof
+2026-07-08 16:53:36,796 | DEBUG    | buggy_average                  | buggy_average called with: [10, 20, 30, 40, 50]
+2026-07-08 16:53:36,797 | DEBUG    | buggy_average                  | buggy_average result: 28.0
+2026-07-08 16:53:36,797 | DEBUG    | fixed_average                  | fixed_average called with: [10, 20, 30, 40, 50]
+2026-07-08 16:53:36,798 | DEBUG    | fixed_average                  | fixed_average result: 30.0
+2026-07-08 16:53:36,799 | DEBUG    | buggy_find_max                 | buggy_find_max result: 10
+2026-07-08 16:53:36,799 | DEBUG    | fixed_find_max                 | fixed_find_max result: 50
+2026-07-08 16:53:36,799 | DEBUG    | buggy_divide                   | buggy_divide: 10 / 0
+2026-07-08 16:53:36,800 | ERROR    | run_bug_demonstrations         | Caught expected crash: division by zero
+2026-07-08 16:53:36,803 | DEBUG    | run_bug_demonstrations         | Traceback (most recent call last):
+  File "debug_profile_demo.py", line 621, in run_bug_demonstrations
+    result = calc.buggy_divide(10, 0)
+  File "debug_profile_demo.py", line 168, in buggy_divide
+    return a / b  # BUG: no check for b == 0
+           ~~^~~
+ZeroDivisionError: division by zero
+
+2026-07-08 16:53:36,805 | DEBUG    | fixed_divide                   | fixed_divide: 10 / 0
+2026-07-08 16:53:36,806 | WARNING  | fixed_divide                   | Division by zero attempted. Returning None.
+2026-07-08 16:53:36,806 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=9, mid=9
+2026-07-08 16:53:36,807 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=8, mid=8
+2026-07-08 16:53:36,807 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=7, mid=7
+2026-07-08 16:53:36,808 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=6, mid=6
+2026-07-08 16:53:36,808 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=5, mid=5
+2026-07-08 16:53:36,808 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=4, mid=4
+2026-07-08 16:53:36,809 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=3, mid=3
+2026-07-08 16:53:36,809 | DEBUG    | fixed_binary_search            | binary_search: left=0, right=9, mid=4
+2026-07-08 16:53:36,809 | DEBUG    | fixed_binary_search            | binary_search: left=0, right=3, mid=1
+2026-07-08 16:53:36,810 | DEBUG    | fixed_binary_search            | binary_search: left=2, right=3, mid=2
+2026-07-08 16:53:36,812 | DEBUG    | fixed_binary_search            | binary_search: left=3, right=3, mid=3
+2026-07-08 16:55:06,000 | DEBUG    | buggy_average                  | buggy_average called with: [10, 20, 30, 40, 50]
+2026-07-08 16:55:06,001 | DEBUG    | buggy_average                  | buggy_average result: 28.0
+2026-07-08 16:55:06,001 | DEBUG    | fixed_average                  | fixed_average called with: [10, 20, 30, 40, 50]
+2026-07-08 16:55:06,001 | DEBUG    | fixed_average                  | fixed_average result: 30.0
+2026-07-08 16:55:06,002 | DEBUG    | buggy_find_max                 | buggy_find_max result: 10
+2026-07-08 16:55:06,002 | DEBUG    | fixed_find_max                 | fixed_find_max result: 50
+2026-07-08 16:55:06,002 | DEBUG    | buggy_divide                   | buggy_divide: 10 / 0
+2026-07-08 16:55:06,002 | ERROR    | run_bug_demonstrations         | Caught expected crash: division by zero
+2026-07-08 16:55:06,004 | DEBUG    | run_bug_demonstrations         | Traceback (most recent call last):
+  File "debug_profile_demo.py", line 621, in run_bug_demonstrations
+    result = calc.buggy_divide(10, 0)
+  File "debug_profile_demo.py", line 168, in buggy_divide
+    return a / b  # BUG: no check for b == 0
+           ~~^~~
+ZeroDivisionError: division by zero
+
+2026-07-08 16:55:06,004 | DEBUG    | fixed_divide                   | fixed_divide: 10 / 0
+2026-07-08 16:55:06,004 | WARNING  | fixed_divide                   | Division by zero attempted. Returning None.
+2026-07-08 16:55:06,008 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=9, mid=9
+2026-07-08 16:55:06,009 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=8, mid=8
+2026-07-08 16:55:06,009 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=7, mid=7
+2026-07-08 16:55:06,009 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=6, mid=6
+2026-07-08 16:55:06,010 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=5, mid=5
+2026-07-08 16:55:06,010 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=4, mid=4
+2026-07-08 16:55:06,010 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=3, mid=3
+2026-07-08 16:55:06,010 | DEBUG    | fixed_binary_search            | binary_search: left=0, right=9, mid=4
+2026-07-08 16:55:06,010 | DEBUG    | fixed_binary_search            | binary_search: left=0, right=3, mid=1
+2026-07-08 16:55:06,010 | DEBUG    | fixed_binary_search            | binary_search: left=2, right=3, mid=2
+2026-07-08 16:55:06,011 | DEBUG    | fixed_binary_search            | binary_search: left=3, right=3, mid=3
+2026-07-08 16:55:19,359 | INFO     | wrapper                        | TIMER >> slow_is_prime took 585.2442 ms
+2026-07-08 16:55:19,360 | INFO     | wrapper                        | TIMER >> fast_is_prime took 0.0972 ms
+2026-07-08 16:55:19,421 | INFO     | wrapper                        | TIMER >> slow_is_prime took 60.8563 ms
+2026-07-08 16:55:19,421 | INFO     | wrapper                        | TIMER >> fast_is_prime took 0.0315 ms
+2026-07-08 16:55:19,428 | INFO     | wrapper                        | TIMER >> slow_is_prime took 6.6880 ms
+2026-07-08 16:55:19,429 | INFO     | wrapper                        | TIMER >> fast_is_prime took 0.0155 ms
+2026-07-08 16:56:15,627 | DEBUG    | buggy_average                  | buggy_average called with: [10, 20, 30, 40, 50]
+2026-07-08 16:56:15,627 | DEBUG    | buggy_average                  | buggy_average result: 28.0
+2026-07-08 16:56:15,627 | DEBUG    | fixed_average                  | fixed_average called with: [10, 20, 30, 40, 50]
+2026-07-08 16:56:15,627 | DEBUG    | fixed_average                  | fixed_average result: 30.0
+2026-07-08 16:56:15,628 | DEBUG    | buggy_find_max                 | buggy_find_max result: 10
+2026-07-08 16:56:15,628 | DEBUG    | fixed_find_max                 | fixed_find_max result: 50
+2026-07-08 16:56:15,628 | DEBUG    | buggy_divide                   | buggy_divide: 10 / 0
+2026-07-08 16:56:15,629 | ERROR    | run_bug_demonstrations         | Caught expected crash: division by zero
+2026-07-08 16:56:15,630 | DEBUG    | run_bug_demonstrations         | Traceback (most recent call last):
+  File "debug_profile_demo.py", line 621, in run_bug_demonstrations
+    result = calc.buggy_divide(10, 0)
+  File "debug_profile_demo.py", line 168, in buggy_divide
+    return a / b  # BUG: no check for b == 0
+           ~~^~~
+ZeroDivisionError: division by zero
+
+2026-07-08 16:56:15,630 | DEBUG    | fixed_divide                   | fixed_divide: 10 / 0
+2026-07-08 16:56:15,630 | WARNING  | fixed_divide                   | Division by zero attempted. Returning None.
+2026-07-08 16:56:15,631 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=9, mid=9
+2026-07-08 16:56:15,631 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=8, mid=8
+2026-07-08 16:56:15,631 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=7, mid=7
+2026-07-08 16:56:15,632 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=6, mid=6
+2026-07-08 16:56:15,632 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=5, mid=5
+2026-07-08 16:56:15,632 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=4, mid=4
+2026-07-08 16:56:15,632 | DEBUG    | buggy_binary_search            | binary_search: left=0, right=3, mid=3
+2026-07-08 16:56:15,637 | DEBUG    | fixed_binary_search            | binary_search: left=0, right=9, mid=4
+2026-07-08 16:56:15,638 | DEBUG    | fixed_binary_search            | binary_search: left=0, right=3, mid=1
+2026-07-08 16:56:15,638 | DEBUG    | fixed_binary_search            | binary_search: left=2, right=3, mid=2
+2026-07-08 16:56:15,639 | DEBUG    | fixed_binary_search            | binary_search: left=3, right=3, mid=3
+2026-07-08 16:56:47,063 | INFO     | slow_find_duplicates           | Running SLOW duplicate finder O(n²)
+2026-07-08 16:56:47,510 | INFO     | wrapper                        | TIMER >> slow_find_duplicates took 446.8402 ms
+2026-07-08 16:56:47,510 | INFO     | slow_string_concat             | Running SLOW string concat
+2026-07-08 16:56:47,541 | INFO     | wrapper                        | TIMER >> slow_string_concat took 31.3572 ms
+2026-07-08 16:56:47,542 | INFO     | slow_sort_search               | Running SLOW sort+search
+2026-07-08 16:56:47,544 | INFO     | wrapper                        | TIMER >> slow_sort_search took 1.7682 ms
+2026-07-08 16:56:47,545 | INFO     | fast_find_duplicates           | Running FAST duplicate finder O(n)
+2026-07-08 16:56:47,549 | INFO     | wrapper                        | TIMER >> fast_find_duplicates took 3.7214 ms
+2026-07-08 16:56:47,550 | INFO     | fast_string_concat             | Running FAST string concat
+2026-07-08 16:56:47,551 | INFO     | wrapper                        | TIMER >> fast_string_concat took 1.1213 ms
+2026-07-08 16:56:47,551 | INFO     | fast_sort_search               | Running FAST sort+search
+2026-07-08 16:56:47,552 | INFO     | wrapper                        | TIMER >> fast_sort_search took 0.7309 ms
+2026-07-08 16:56:47,873 | INFO     | run_cpu_profile_demo           | Profiles saved to slow_profile.prof and fast_profile.prof
+2026-07-08 16:59:52,283 | DEBUG    | process_age                    | Processing valid age: 25
+2026-07-08 16:59:52,284 | DEBUG    | process_age                    | Processing valid age: 17
