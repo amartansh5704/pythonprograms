@@ -1,0 +1,4 @@
+name: base
+dependencies:
+  - flake8
+  - pytest
